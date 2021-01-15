@@ -6,9 +6,6 @@ import pickle
 import os
 import random
 
-
-
-
 def start(update, context):
     name = update.effective_chat.first_name
     context.bot.send_message(
@@ -23,7 +20,8 @@ def help(update, context):
         text="Available commands:"
         "\n/status Shows your current threat level."
         "\n/report Shows the threat week report."
-        "\n/quiz Start daily cybersecurity quiz.",
+        "\n/quiz Start daily cybersecurity quiz."
+        "\n/ranking Show the security ranking of all employees.",
 
         parse_mode=ParseMode.MARKDOWN
     )
@@ -68,10 +66,24 @@ def report(update, context):
         photo=open(fitxer, 'rb'))
     os.remove(fitxer)
 
+def ranking(update, context):
+    context.bot.send_message(
+    chat_id=update.effective_chat.id,
+    text="👑    *Security Ranking*    👑"
+    "\n"
+    "\n🏆   (1.250 p)   1. Jan Puigdomènech" 
+    "\n🥈   (1.200 p)   2. Wei Xiao Xia"
+    "\n🥉   (1.175 p)   3. Marc Monfort"
+    "\n🎖   (1.115 p)   4. Àlex Cera"
+    "\n"
+    "\n     6 more places above you."
+    "\n"
+    "\n🎖   (975 p)   11. You!"
+    "\n"
+    "\n     16 more places below you.",
+    parse_mode=ParseMode.MARKDOWN)
 
-
-
-
+'''🏆🥇🥈🥉🏅🎖'''
 
 TOKEN = open('token.txt').read().strip()
 updater = Updater(token=TOKEN, use_context=True)
@@ -82,6 +94,7 @@ dispatcher.add_handler(CommandHandler('help', help))
 dispatcher.add_handler(CommandHandler('report', report))
 dispatcher.add_handler(CommandHandler('status', status))
 dispatcher.add_handler(CommandHandler('quiz', quiz))
+dispatcher.add_handler(CommandHandler('ranking', ranking))
 # dispatcher.add_handler(MessageHandler(Filters.text, skyComp))
 
 
